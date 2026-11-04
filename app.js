@@ -3,8 +3,12 @@
  const items=window.REFERENCE_IMAGES||[];
  const $=id=>document.getElementById(id);
  const storageKey='director-reference-favorites-v1';
- const categories=['Все','Космос','Художники','Иллюстрация','Цифровая живопись','Интерфейсы','Игры','Вёрстка','Коллаж','Раннее digital','Музыка','Карты','Наука','Фотография'];
- const matchesCategory=(item,name)=>name==='Все'||(name==='Космос'?item.tags.some(tag=>tag.toLocaleLowerCase('ru')==='космос'):item.category===name);
+ const categories=['Все','Раннее digital','Хоррор','Космос','Художники','Иллюстрация','Цифровая живопись','Интерфейсы','Игры','Вёрстка','Коллаж','Музыка','Карты','Наука','Фотография'];
+ const matchesCategory=(item,name)=>{
+  if(name==='Все')return true;
+  if(name==='Космос'||name==='Хоррор')return item.tags.some(tag=>tag.toLocaleLowerCase('ru')===name.toLocaleLowerCase('ru'));
+  return item.category===name;
+ };
  let favorites=new Set();
  try{favorites=new Set(JSON.parse(localStorage.getItem(storageKey)||'[]'));}catch{}
  let category='Все',onlyFavorites=false,query='',interfaceType='',ordered=[...items],visible=[],currentIndex=0;
